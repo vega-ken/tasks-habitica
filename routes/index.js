@@ -67,5 +67,21 @@ router.post('/addTask', (req, res) => {
     });
 });
 
+// BORRAR UNA TAREA
+router.post('/deleteTask', (req, res) => {
+  let id = req.body.id;
+  let stringURL = `https://habitica.com/api/v3/tasks/${id}`;
+
+  requestify.request(stringURL, {
+    method: 'DELETE',
+    headers: {
+      'x-api-user': keys.apiUser,
+      'x-api-key': keys.apiKey
+    }
+  })
+    .then( (response) => {
+      res.json({ dataResponse: response }).end();
+    });
+})
 
 module.exports = router;

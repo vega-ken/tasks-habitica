@@ -30,7 +30,7 @@ Before running the program, you need to change the archive app.js.
 
 In the first two lines, replace *your-api-user-id* and *your-api-token* with yours from your account.
 
-You can get them [here](https://habitica.com/#/options/settings/api).
+You can get them [here](https://habitica.com/user/settings/api).
 
 After you save your changes, open the terminal or command prompt in the path of the archives downloaded and type:
 

@@ -14,7 +14,7 @@ $("document").ready(() => {
       type: 'POST',
       dataType: "json",
       url: window.location.href + "addTask",  // toma el url actual y le agrega "addTask" : ejm de como queda :  http://localhost:3000/addTask
-      data: { nameNewTask: nameNewTask, nameNoteTask: nameNoteTask , priority : 1.5 },
+      data: { nameNewTask: nameNewTask, nameNoteTask: nameNoteTask, priority: 1.5 }, // TODO
       success: (reply) => {
         console.log(reply);
         let body = JSON.parse(reply.dataResponse.body);
@@ -39,7 +39,7 @@ $("document").ready(() => {
               <i class='fa fa-pencil-square-o action-buttons'></i>
             </div>
             <div class="col-1 col-xs-1 col-sm-1 col-md-1 col-lg-1 text-center">
-              <i class='fa fa-trash action-buttons'></i>
+              <i class='fa fa-trash action-buttons' onclick="deleteTask('${data.id}')"></i>
             </div>
             <div class="col-1 col-xs-1 col-sm-1 col-md-1 col-lg-1 text-center">
               <i class='fa fa-arrows-v action-buttons'></i>
@@ -124,27 +124,48 @@ function gettingTaskSliced(textNewTask, indexNoteTask) {
   return result;
 }
 
-function convertPriorityToText( priorityNumber ){
-  if(priorityNumber == 2){
+function convertPriorityToText(priorityNumber) {
+  if (priorityNumber == 2) {
     return "Hard";
   }
-  if(priorityNumber == 1.5){
+  if (priorityNumber == 1.5) {
     return "Medium";
   }
-  if(priorityNumber == 1){
+  if (priorityNumber == 1) {
     return "Easy";
   }
-  else{
+  else {
     return "Trivial";
   }
 }
 
-function checkIfNotes (dataNotes)
-{
-  if(dataNotes){
+function checkIfNotes(dataNotes) {
+  if (dataNotes) {
     return `<p class="noteTask mb-0">${dataNotes}</p>`;
   }
-  else{
+  else {
     return ``;
   }
+}
+
+function deleteTask(id) {
+  changeSync('waiting');
+  $("#" + id).parent().parent().remove();
+  $.ajax(
+    {
+      type: 'POST',
+      dataType: "json",
+      url: window.location.href + "deleteTask",
+      data: { id: id },
+      success:
+      (reply) => {
+        let body = JSON.parse(reply.dataResponse.body);
+        if (body.success == true) {
+          changeSync('ok');
+        }
+        else{
+          changeSync('error');
+        }
+      }
+    });
 }
