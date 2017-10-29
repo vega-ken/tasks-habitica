@@ -1,8 +1,8 @@
-# Tasks-today-habitica
+# Tasks-habitica
 A node.js web app that works with the Habitica API. For now, it just supports To-Dos.
 
 <!-- ![demonstration gif](https://i.imgur.com/vCmbmwm.gifv "demonstration gif") -->
-<a href="https://imgur.com/vCmbmwm"><img src="https://i.imgur.com/vCmbmwm.gif" title="source: imgur.com" align="center" /></a>
+<!-- <a href="https://imgur.com/vCmbmwm"><img src="https://i.imgur.com/vCmbmwm.gif" title="source: imgur.com" align="center" /></a> -->
 
 I created this program as a way to practice and to use [Habitica](https://habitica.com/) as a more convenient To-Do manager for me.
 It uses the [Habitica API v3](https://habitica.com/apidoc/), HTML, CSS, JS and Bootstrap.
