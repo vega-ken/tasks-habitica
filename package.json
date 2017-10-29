@@ -1,0 +1,20 @@
+{
+  "name": "tasks-today",
+  "version": "2.0.0",
+  "description": "A node.js webapp that works with the Habitica API. For now just support habitica To-Dos.",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "habitica"
+  ],
+  "author": "Ken Vega",
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "express": "^4.16.1",
+    "express-handlebars": "^3.0.0",
+    "requestify": "^0.2.5"
+  }
+}

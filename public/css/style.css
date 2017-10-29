@@ -1,0 +1,58 @@
+.noteTask{
+  color: #7A7C7D;
+  font-size: 0.8em;
+}
+
+.verticalAlign{
+  display: flex;
+  align-items: center;
+}
+
+.action-buttons{
+  vertical-align: middle;
+}
+
+.rowTask{
+  border-bottom: 1px solid #CFC7C7;
+}
+
+.taskName{
+  display : inline;
+}
+
+/* dificultad */
+.taskDif{
+  font-size: 10px;
+  padding-left : 2px;
+  padding-right: 2px;
+  display: inline;
+  color: #fff;
+}
+
+.taskHard{
+  background-color: #d83131;
+}
+
+.taskMedium{
+  background-color: #e17218;
+}
+
+.taskEasy{
+  background-color: #6fd633;
+}
+
+.taskTrivial{
+  background-color: #17dbf5;
+}
+
+/* icono sync */
+
+#syncIcon{
+  color : #c7c7c7;
+}
+
+/* containers */
+
+#containerTasks > :first-child{ /* #containerTasks div.row:first-child */
+  border-top: 1px solid #CFC7C7;
+}
