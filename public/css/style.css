@@ -70,3 +70,8 @@
   width: 70%;
   border-style: none;
 }
+
+.editButton{
+  visibility: hidden; /* could change to display : none; */
+}
+

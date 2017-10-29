@@ -174,16 +174,24 @@ function editTask(id) {
   console.log('edit : ' + id);
   let textTask = $("#" + id).html();
   let noteTask = $("#" + id).siblings().filter('.noteTask')[0].innerHTML;  // el elemento hermano que tiene la clase de noteTask
-  console.log(noteTask);
-  console.log(`el texto para editar dice : ${textTask}`);
-  let element = $("#" + id).parent();
+ 
+  let element = $("#" + id).parent(); // donde esta el texto, las notas y las subtareas
   
-  element.empty();
+  element.empty(); // falta preocuparse por las tareas que tienen subtareas
   element.append(`
-    <form id=""> 
-      <input type="text" autocomplete="off" value="${textTask}" autofocus class="inputEditText mb-2">
-      <input type="text" autocomplete="off" value="${noteTask }" class="inputEditNotes">
+    <form id="formEditTask"> 
+      <input type="text" autocomplete="off" value="${textTask}" class="inputEditText mb-2">
+      <input type="text" autocomplete="off" value="${noteTask}" class="inputEditNotes">
+      <input type="hidden" value="${id}">
+      <button class="editButton" type="submit"></button>
     </form>
   `);
-  
 }
+
+$("body").on('submit', '#formEditTask' , (e) => {
+  e.preventDefault();
+  changeSync('waiting');
+  console.log('the event');
+  console.log(e);
+  $("#formEditTask").empty();
+});
