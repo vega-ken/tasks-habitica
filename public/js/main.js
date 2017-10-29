@@ -1,6 +1,5 @@
 $("document").ready(() => {
-  console.log('hello mundo');
-
+  //PRESIONA ENTER EN ENTRADA
   $("#formAddTask").on('submit', (e) => {
     e.preventDefault();
     changeSync('waiting');
@@ -22,19 +21,39 @@ $("document").ready(() => {
         if (body.success == true) {
           changeSync('ok');
           let data = body.data;
-          
+
+          let priorityTask = convertPriorityToText(data.priority);
+          let notesReply = checkIfNotes(data.notes);
+          //agregarlo a la vista
+          $("#containerTasks").prepend(`
+          <div class="row rowTask pt-2 pb-2">
+            <div class="col-8 col-xs-8 col-sm-8 col-md-8 col-lg-8">        
+              <p class="taskName mb-0" id="${data.id}" ondblclick="checkTheTask(id)">${data.text} </p><p class="taskDif task${priorityTask} mb-2">${priorityTask}</p> 
+              ${notesReply}
+            </div>
+      
+            <div class="col-1 col-xs-1 col-sm-1 col-md-1 col-lg-1 text-center">
+              <i class='fa fa-plus action-buttons'></i>
+            </div>
+            <div class="col-1 col-xs-1 col-sm-1 col-md-1 col-lg-1 text-center">
+              <i class='fa fa-pencil-square-o action-buttons'></i>
+            </div>
+            <div class="col-1 col-xs-1 col-sm-1 col-md-1 col-lg-1 text-center">
+              <i class='fa fa-trash action-buttons'></i>
+            </div>
+            <div class="col-1 col-xs-1 col-sm-1 col-md-1 col-lg-1 text-center">
+              <i class='fa fa-arrows-v action-buttons'></i>
+            </div>
+      
+          </div>
+          `);
         }
         else {
           changeSync('error');
         }
       }
     });
-
     $("#textNewTask").val('');
-
-
-    console.log(nameNewTask);
-    console.log(nameNoteTask);
   })
 
   function checkTheTask(id) {
@@ -103,4 +122,29 @@ function gettingTaskSliced(textNewTask, indexNoteTask) {
   }
 
   return result;
+}
+
+function convertPriorityToText( priorityNumber ){
+  if(priorityNumber == 2){
+    return "Hard";
+  }
+  if(priorityNumber == 1.5){
+    return "Medium";
+  }
+  if(priorityNumber == 1){
+    return "Easy";
+  }
+  else{
+    return "Trivial";
+  }
+}
+
+function checkIfNotes (dataNotes)
+{
+  if(dataNotes){
+    return `<p class="noteTask mb-0">${dataNotes}</p>`;
+  }
+  else{
+    return ``;
+  }
 }
