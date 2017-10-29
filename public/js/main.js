@@ -36,7 +36,7 @@ $("document").ready(() => {
               <i class='fa fa-plus action-buttons'></i>
             </div>
             <div class="col-1 col-xs-1 col-sm-1 col-md-1 col-lg-1 text-center">
-              <i class='fa fa-pencil-square-o action-buttons'></i>
+              <i class='fa fa-pencil-square-o action-buttons' onclick="editTask('${data.id}')"></i>
             </div>
             <div class="col-1 col-xs-1 col-sm-1 col-md-1 col-lg-1 text-center">
               <i class='fa fa-trash action-buttons' onclick="deleteTask('${data.id}')"></i>
@@ -168,4 +168,22 @@ function deleteTask(id) {
         }
       }
     });
+}
+
+function editTask(id) {
+  console.log('edit : ' + id);
+  let textTask = $("#" + id).html();
+  let noteTask = $("#" + id).siblings().filter('.noteTask')[0].innerHTML;  // el elemento hermano que tiene la clase de noteTask
+  console.log(noteTask);
+  console.log(`el texto para editar dice : ${textTask}`);
+  let element = $("#" + id).parent();
+  
+  element.empty();
+  element.append(`
+    <form id=""> 
+      <input type="text" autocomplete="off" value="${textTask}" autofocus class="inputEditText mb-2">
+      <input type="text" autocomplete="off" value="${noteTask }" class="inputEditNotes">
+    </form>
+  `);
+  
 }

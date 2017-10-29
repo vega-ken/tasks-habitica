@@ -56,3 +56,17 @@
 #containerTasks > :first-child{ /* #containerTasks div.row:first-child */
   border-top: 1px solid #CFC7C7;
 }
+
+/* form para editar tareas */
+
+.inputEditText{
+  width: 80%;
+  border-style: none;
+}
+
+.inputEditNotes{
+  color: #7A7C7D;
+  font-size: 0.8em;
+  width: 70%;
+  border-style: none;
+}
