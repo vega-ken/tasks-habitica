@@ -1,16 +1,15 @@
 # Tasks-habitica
-A node.js web app that works with the Habitica API. For now, it just supports To-Dos.
+A node.js web app that works as an alternative task-manager for Habitica. For now, it just supports To-Dos.
 
 <!-- ![demonstration gif](https://i.imgur.com/vCmbmwm.gifv "demonstration gif") -->
 <!-- <a href="https://imgur.com/vCmbmwm"><img src="https://i.imgur.com/vCmbmwm.gif" title="source: imgur.com" align="center" /></a> -->
 
-I created this program as a way to practice and to use [Habitica](https://habitica.com/) as a more convenient To-Do manager for me.
-It uses the [Habitica API v3](https://habitica.com/apidoc/), HTML, CSS, JS and Bootstrap.
+<!-- It uses the [Habitica API v3](https://habitica.com/apidoc/), HTML, CSS, JS and Bootstrap. -->
 
 ### Features
 
 * Shows all your actual To-Dos in Habitica.
-* Creation of To-Dos and their respective checklists (for now, the default difficulty when creating them is hard).
+* Creation of To-Dos and their respective checklists (for now, the default difficulty when creating them is medium).
 * Checking To-Dos and their respective checklists.
 * Deletion of To-Dos.
 * You can order the To-Dos, but this order won't sync with Habitica (working on it).
@@ -26,11 +25,9 @@ It uses the [Habitica API v3](https://habitica.com/apidoc/), HTML, CSS, JS and B
 
 ### Installing
 
-Before running the program, you need to change the archive app.js.
+Before running the program, you need to change the archive userApiKeys.js that is in the config folder.
 
-In the first two lines, replace *your-api-user-id* and *your-api-token* with yours from your account.
-
-You can get them [here](https://habitica.com/user/settings/api).
+Just replace *your-api-user-id* and *your-api-token* with yours from your account (you can get them [here](https://habitica.com/user/settings/api) ).
 
 After you save your changes, open the terminal or command prompt in the path of the archives downloaded and type:
 
@@ -58,9 +55,9 @@ After using the program, press Ctrl+C on the terminal to stop it.
 
 - [ ] Enable Dailies and Habits (those will be added to the navbar as links).
 - [x] Add notes to To-Dos with a character (example : " to-do name | to-do notes ")
-- [ ] Enable edit button or remove it.
+- [x] Enable edit button.
 - [ ] Enable the navigation button sync the order with Habitica' server.
-- [ ] Add an indicator for the synchronization with Habitica' server.
+- [x] Add an indicator for the synchronization with Habitica' server.
 - [ ] Enable the user to choose difficulty of new To-Dos.
 
 ### Additional

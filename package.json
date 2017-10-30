@@ -4,7 +4,7 @@
   "description": "A node.js webapp that works with the Habitica API. For now just support habitica To-Dos.",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node app"
   },
   "keywords": [
     "habitica"
