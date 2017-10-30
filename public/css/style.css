@@ -27,6 +27,7 @@
   padding-right: 2px;
   display: inline;
   color: #fff;
+  border-radius: 2px;
 }
 
 .taskHard{
@@ -53,7 +54,7 @@
 
 /* containers */
 
-#containerTasks > :first-child{ /* #containerTasks div.row:first-child */
+#containerTasks > :first-child{ /* linea arriba a la primera fila */ /* #containerTasks div.row:first-child */
   border-top: 1px solid #CFC7C7;
 }
 
@@ -62,6 +63,7 @@
 .inputEditText{
   width: 80%;
   border-style: none;
+  padding: 0;
 }
 
 .inputEditNotes{
@@ -69,6 +71,7 @@
   font-size: 0.8em;
   width: 70%;
   border-style: none;
+  padding: 0;
 }
 
 .editButton{

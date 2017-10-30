@@ -79,9 +79,35 @@ router.post('/deleteTask', (req, res) => {
       'x-api-key': keys.apiKey
     }
   })
-    .then( (response) => {
+    .then((response) => {
       res.json({ dataResponse: response }).end();
     });
+});
+
+//ACTUALIZAR UNA TAREA (solo titulo y notas)
+router.post('/updateTask', (req, res) => {
+  let id = req.body.id;
+  let nameTask = req.body.nameTask;
+  let noteTask = req.body.noteTask;
+
+  let stringURL = `https://habitica.com/api/v3/tasks/${id}`;
+
+  requestify.request(stringURL, {
+    method: 'PUT',
+    body: {
+      text: nameTask,
+      notes: noteTask,
+      //priority: priority
+    },
+    headers: {
+      'x-api-user': keys.apiUser,
+      'x-api-key': keys.apiKey
+    }
+  })
+    .then((response) => {
+      res.json({ dataResponse: response }).end();
+    });
+
 })
 
 module.exports = router;

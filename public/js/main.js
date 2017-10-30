@@ -179,19 +179,50 @@ function editTask(id) {
   
   element.empty(); // falta preocuparse por las tareas que tienen subtareas
   element.append(`
-    <form id="formEditTask"> 
-      <input type="text" autocomplete="off" value="${textTask}" class="inputEditText mb-2">
-      <input type="text" autocomplete="off" value="${noteTask}" class="inputEditNotes">
-      <input type="hidden" value="${id}">
+    <form class="formEditTask"> 
+      <input type="text" autocomplete="off" value="${textTask}" class="inputEditText ${id}" required>
+      <input type="text" autocomplete="off" value="${noteTask}" class="inputEditNotes ${id}">
+      <input type="hidden" class="idTaskTarget" value="${id}">
       <button class="editButton" type="submit"></button>
     </form>
   `);
 }
 
-$("body").on('submit', '#formEditTask' , (e) => {
+// SUBMITING THE CHANGES TO THE HABITICA SERVER
+$("body").on('submit', '.formEditTask' , (e) => {
   e.preventDefault();
   changeSync('waiting');
-  console.log('the event');
-  console.log(e);
+  let id = e.currentTarget.getElementsByClassName('idTaskTarget')[0].defaultValue;
+  let nameTask = $(`.inputEditText.${id}`).val(); // document.getElementById('2345').value; //= $('#formEditTask').filter('inputEditText'); //e.currentTarget.getElementsByClassName('inputEditText');
+  let noteTask = $(`.inputEditNotes.${id}`).val(); 
+
   $("#formEditTask").empty();
+  
+  $.ajax({
+    type: 'POST',
+    dataType: 'json',
+    url: window.location.href + "updateTask",
+    data: { id: id , nameTask : nameTask , noteTask : noteTask },
+    success: (reply) => {
+      console.log(reply);
+      let body = JSON.parse(reply.dataResponse.body);
+      if (body.success == true) {
+        changeSync('ok');
+        //let data = body.data;
+        //console.log(`HP : ${data.hp}, MP : ${data.hp}, XP : ${data.exp}, LVL : ${data.lvl}, GP : ${data.gp}`);
+      }
+      else {
+        changeSync('error');
+      }
+    },
+    error : (reply) => {
+      console.log(reply);
+      changeSync('error');
+    }
+
+    
+  });
+  
+  
+  
 });
