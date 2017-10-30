@@ -28,7 +28,7 @@ $("document").ready(() => {
           $("#containerTasks").prepend(`
           <div class="row rowTask pt-2 pb-2">
             <div class="col-8 col-xs-8 col-sm-8 col-md-8 col-lg-8">        
-              <p class="taskName mb-0" id="${data.id}" ondblclick="checkTheTask(id)">${data.text} </p><p class="taskDif task${priorityTask} mb-2">${priorityTask}</p> 
+              <p class="taskName mb-0" id="${data.id}">${data.text} </p><p class="taskDif task${priorityTask} mb-2">${priorityTask}</p> 
               ${notesReply}
             </div>
       
@@ -56,9 +56,12 @@ $("document").ready(() => {
     $("#textNewTask").val('');
   })
 
-  function checkTheTask(id) {
+  //check the task by doubleClicking
+  $("body").on('dblclick' , `p.taskName` , (e) => {
+    let id = e.currentTarget.getAttribute('id');
+    
     changeSync('waiting');
-    console.log(id);
+    
     $("#" + id).parent().parent().remove(); // remover la fila entera de esa tarea
     $.ajax({
       type: 'POST',
@@ -78,7 +81,7 @@ $("document").ready(() => {
         }
       }
     });
-  }
+  })
 });
 
 
