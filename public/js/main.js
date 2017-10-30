@@ -5,93 +5,102 @@ $("document").ready(() => {
     changeSync('waiting');
     let textNewTask = $("#textNewTask").val();
     let indexNoteTask = textNewTask.indexOf('|');
-
     let result = gettingTaskSliced(textNewTask, indexNoteTask);
+
     let nameNewTask = result.nameNewTask;
     let nameNoteTask = result.nameNoteTask;
 
-    $.ajax({
-      type: 'POST',
-      dataType: "json",
-      url: window.location.href + "addTask",  // toma el url actual y le agrega "addTask" : ejm de como queda :  http://localhost:3000/addTask
-      data: { nameNewTask: nameNewTask, nameNoteTask: nameNoteTask, priority: 1.5 }, // TODO
-      success: (reply) => {
-        console.log(reply);
-        let body = JSON.parse(reply.dataResponse.body);
-        if (body.success == true) {
-          changeSync('ok');
-          let data = body.data;
+    let data = {
+      nameNewTask: nameNewTask,
+      nameNoteTask: nameNoteTask,
+      priority: 1.5
+    }
 
-          let priorityTask = convertPriorityToText(data.priority);
-          let notesReply = checkIfNotes(data.notes);
-          //agregarlo a la vista
-          $("#containerTasks").prepend(`
-          <div class="row rowTask pt-2 pb-2">
-            <div class="col-8 col-xs-8 col-sm-8 col-md-8 col-lg-8">        
-              <p class="taskName mb-0" id="${data.id}">${data.text} </p><p class="taskDif task${priorityTask} mb-2">${priorityTask}</p> 
-              ${notesReply}
-            </div>
-      
-            <div class="col-1 col-xs-1 col-sm-1 col-md-1 col-lg-1 text-center">
-              <i class='fa fa-plus action-buttons'></i>
-            </div>
-            <div class="col-1 col-xs-1 col-sm-1 col-md-1 col-lg-1 text-center">
-              <i class='fa fa-pencil-square-o action-buttons' onclick="editTask('${data.id}')"></i>
-            </div>
-            <div class="col-1 col-xs-1 col-sm-1 col-md-1 col-lg-1 text-center">
-              <i class='fa fa-trash action-buttons' onclick="deleteTask('${data.id}')"></i>
-            </div>
-            <div class="col-1 col-xs-1 col-sm-1 col-md-1 col-lg-1 text-center">
-              <i class='fa fa-arrows-v action-buttons'></i>
-            </div>
-      
-          </div>
-          `);
-        }
-        else {
-          changeSync('error');
-        }
-      }
-    });
+    makeRequest('POST', 'addTask', data, sucessAddTask); // method, route, data(json), function
     $("#textNewTask").val('');
-  })
+  });
 
   //check the task by doubleClicking
-  $("body").on('dblclick' , `p.taskName` , (e) => {
+  $("body").on('dblclick', `p.taskName`, (e) => {
     let id = e.currentTarget.getAttribute('id');
-    
     changeSync('waiting');
-    
     $("#" + id).parent().parent().remove(); // remover la fila entera de esa tarea
-    $.ajax({
-      type: 'POST',
-      dataType: 'json',
-      url: window.location.href + "checkTask",
-      data: { idTask: id },
-      success: (reply) => {
-        //console.log(reply);
-        let body = JSON.parse(reply.dataResponse.body);
-        if (body.success == true) {
-          changeSync('ok');
-          let data = body.data;
-          console.log(`HP : ${data.hp}, MP : ${data.hp}, XP : ${data.exp}, LVL : ${data.lvl}, GP : ${data.gp}`);
-        }
-        else {
-          changeSync('error');
-        }
-      }
-    });
-  })
+    let data = { id: id };
+    makeRequest('POST','checkTask',data, successCheckTask);
+  });
+
 });
 
+function makeRequest(method, route, data, successFunction) {
+  $.ajax({
+    type: method,
+    dataType: "json",
+    url: window.location.href + route,
+    data: data, // TODO
+    success: (reply) => {
+      console.log(reply);
+      let body = JSON.parse(reply.dataResponse.body);
+      if (body.success == true) {
+        changeSync('ok');
+        if(successFunction) { // a veces no necesitas nada mas (como cuando se elimina la tarea)
+          let data = body.data;
+          successFunction(data);
+        }
+      }
+      else {
+        changeSync('error');
+      }
+    },
+    error: (reply) => {
+      console.log(reply);
+      changeSync('error');
+    }
+  });
+}
 
+function sucessAddTask(data){
+  let priorityTask = convertPriorityToText(data.priority);
+  let notesReply;
+  if (data.notes) 
+    notesReply = `<p class="noteTask mb-0">${data.notes}</p>`;
+  else
+    notesReply = ``;
+  
+  //agregarlo a la vista
+  $("#containerTasks").prepend(`
+  <div class="row rowTask pt-2 pb-2">
+    <div class="col-8 col-xs-8 col-sm-8 col-md-8 col-lg-8">        
+      <p class="taskName mb-0" id="${data.id}">${data.text} </p><p class="taskDif task${priorityTask} mb-2">${priorityTask}</p> 
+      ${notesReply}
+    </div>
+
+    <div class="col-1 col-xs-1 col-sm-1 col-md-1 col-lg-1 text-center">
+      <i class='fa fa-plus action-buttons'></i>
+    </div>
+    <div class="col-1 col-xs-1 col-sm-1 col-md-1 col-lg-1 text-center">
+      <i class='fa fa-pencil-square-o action-buttons' onclick="editTask('${data.id}')"></i>
+    </div>
+    <div class="col-1 col-xs-1 col-sm-1 col-md-1 col-lg-1 text-center">
+      <i class='fa fa-trash action-buttons' onclick="deleteTask('${data.id}')"></i>
+    </div>
+    <div class="col-1 col-xs-1 col-sm-1 col-md-1 col-lg-1 text-center">
+      <i class='fa fa-arrows-v action-buttons'></i>
+    </div>
+
+  </div>
+  `);
+}
+
+function successCheckTask(data){
+  //console.log('logro chequear la tarea a traves de una funcion que llama una funcion');
+  console.log(`HP : ${data.hp}, MP : ${data.hp}, XP : ${data.exp}, LVL : ${data.lvl}, GP : ${data.gp}`);
+}
 
 function changeSync(state) {
   if (state == 'waiting') {
     //cambiar clase a waiting. fa fa-2x fa-refresh fa-spin ml-auto . syncIcon
     $("#syncIcon").removeClass();
     $("#syncIcon").addClass("fa fa-2x fa-refresh fa-spin ml-auto");
-
   }
   else if (state == 'ok') {
     //cambiar clase a original. fa fa-2x fa-check-circle-o ml-auto
@@ -106,7 +115,6 @@ function changeSync(state) {
 }
 
 function gettingTaskSliced(textNewTask, indexNoteTask) {
-
   let nameNewTask;
   let nameNoteTask;
 
@@ -123,63 +131,35 @@ function gettingTaskSliced(textNewTask, indexNoteTask) {
     nameNewTask: nameNewTask,
     nameNoteTask: nameNoteTask
   }
-
   return result;
 }
 
 function convertPriorityToText(priorityNumber) {
-  if (priorityNumber == 2) {
-    return "Hard";
-  }
-  if (priorityNumber == 1.5) {
-    return "Medium";
-  }
-  if (priorityNumber == 1) {
-    return "Easy";
-  }
-  else {
-    return "Trivial";
-  }
+  if (priorityNumber == 2) return "Hard";
+  
+  else if (priorityNumber == 1.5) return "Medium";
+
+  else if (priorityNumber == 1) return "Easy";
+
+  else return "Trivial";
 }
 
-function checkIfNotes(dataNotes) {
-  if (dataNotes) {
-    return `<p class="noteTask mb-0">${dataNotes}</p>`;
-  }
-  else {
-    return ``;
-  }
-}
+
 
 function deleteTask(id) {
   changeSync('waiting');
   $("#" + id).parent().parent().remove();
-  $.ajax(
-    {
-      type: 'POST',
-      dataType: "json",
-      url: window.location.href + "deleteTask",
-      data: { id: id },
-      success:
-      (reply) => {
-        let body = JSON.parse(reply.dataResponse.body);
-        if (body.success == true) {
-          changeSync('ok');
-        }
-        else{
-          changeSync('error');
-        }
-      }
-    });
+  let data = { id: id };
+  makeRequest('POST','deleteTask',data);
 }
 
 function editTask(id) {
   console.log('edit : ' + id);
   let textTask = $("#" + id).html();
   let noteTask = $("#" + id).siblings().filter('.noteTask')[0].innerHTML;  // el elemento hermano que tiene la clase de noteTask
- 
+
   let element = $("#" + id).parent(); // donde esta el texto, las notas y las subtareas
-  
+
   element.empty(); // falta preocuparse por las tareas que tienen subtareas
   element.append(`
     <form class="formEditTask"> 
@@ -192,20 +172,20 @@ function editTask(id) {
 }
 
 // SUBMITING THE CHANGES TO THE HABITICA SERVER
-$("body").on('submit', '.formEditTask' , (e) => {
+$("body").on('submit', '.formEditTask', (e) => {
   e.preventDefault();
   changeSync('waiting');
   let id = e.currentTarget.getElementsByClassName('idTaskTarget')[0].defaultValue;
   let nameTask = $(`.inputEditText.${id}`).val(); // document.getElementById('2345').value; //= $('#formEditTask').filter('inputEditText'); //e.currentTarget.getElementsByClassName('inputEditText');
-  let noteTask = $(`.inputEditNotes.${id}`).val(); 
+  let noteTask = $(`.inputEditNotes.${id}`).val();
 
   $("#formEditTask").empty();
-  
+
   $.ajax({
     type: 'POST',
     dataType: 'json',
     url: window.location.href + "updateTask",
-    data: { id: id , nameTask : nameTask , noteTask : noteTask },
+    data: { id: id, nameTask: nameTask, noteTask: noteTask },
     success: (reply) => {
       console.log(reply);
       let body = JSON.parse(reply.dataResponse.body);
@@ -218,14 +198,9 @@ $("body").on('submit', '.formEditTask' , (e) => {
         changeSync('error');
       }
     },
-    error : (reply) => {
+    error: (reply) => {
       console.log(reply);
       changeSync('error');
     }
-
-    
   });
-  
-  
-  
 });

@@ -26,8 +26,8 @@ router.get('/', (req, res) => {
 
 // MARCAR UNA TAREA COMO HECHA
 router.post('/checkTask', (req, res) => {
-  let idTask = req.body.idTask;
-  let checkTaskString = "https://habitica.com/api/v3/tasks/" + idTask + "/score/up";
+  let id = req.body.id;
+  let checkTaskString = "https://habitica.com/api/v3/tasks/" + id + "/score/up";
   //console.log(checkTaskString);
   requestify.request(checkTaskString, {
     method: 'POST',
