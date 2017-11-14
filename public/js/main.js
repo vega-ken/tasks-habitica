@@ -1,4 +1,12 @@
 $("document").ready(() => {
+
+  //CAMBIO DE DIFICULTAD PARA NUEVA TAREA
+  let formDifs = document.querySelectorAll('#addTaskContainer span.taskDif');
+  // a los 4 les agrego un evento de cuando son clickeados, agregarles la clase
+  for(let i = 0; i < formDifs.length; i++){
+    formDifs[i].addEventListener('click', changeActiveDif);
+  }
+
   //PRESIONA ENTER EN ENTRADA
   $("#formAddTask").on('submit', (e) => {
     e.preventDefault();
@@ -10,10 +18,12 @@ $("document").ready(() => {
     let nameNewTask = result.nameNewTask;
     let nameNoteTask = result.nameNoteTask;
 
+    let priority = getPriority();
+
     let data = {
       nameNewTask: nameNewTask,
       nameNoteTask: nameNoteTask,
-      priority: 1.5
+      priority: priority
     }
 
     makeRequest('POST', 'addTask', data, sucessAddTask); // method, route, data(json), function
@@ -100,7 +110,7 @@ function changeSync(state) {
   if (state == 'waiting') {
     //cambiar clase a waiting. fa fa-2x fa-refresh fa-spin ml-auto . syncIcon
     $("#syncIcon").removeClass();
-    $("#syncIcon").addClass("fa fa-2x fa-refresh fa-spin ml-auto");
+    $("#syncIcon").addClass("fa fa-2x fa-spinner fa-spin ml-auto");
   }
   else if (state == 'ok') {
     //cambiar clase a original. fa fa-2x fa-check-circle-o ml-auto
@@ -112,6 +122,22 @@ function changeSync(state) {
     $("#syncIcon").removeClass();
     $("#syncIcon").addClass("fa fa-2x fa-exclamation-circle ml-auto");
   }
+}
+
+function getPriority(){
+  let priority = document.querySelector('.taskDifActive').innerHTML;
+  priority = changePriorityToNumber(priority)
+  return priority;
+}
+
+function changePriorityToNumber(priorityText){
+  if (priorityText == "Hard") return 2;
+  
+  else if (priorityText == "Medium") return 1.5;
+
+  else if (priorityText == "Easy") return 1;
+
+  else return 0.1;
 }
 
 function gettingTaskSliced(textNewTask, indexNoteTask) {
@@ -144,7 +170,16 @@ function convertPriorityToText(priorityNumber) {
   else return "Trivial";
 }
 
-
+function changeActiveDif(e){
+  //console.log(e.target);
+  //buscar el span con la clase active y quitarsela
+    let formDifs = document.querySelectorAll('#addTaskContainer span.taskDif');
+    for(let i = 0; i < formDifs.length; i++){
+      formDifs[i].classList.remove('taskDifActive');
+    }
+  //agregar la clase taskDifActive al target seleccionado 
+    e.target.className += ' taskDifActive';
+}
 
 function deleteTask(id) {
   changeSync('waiting');
@@ -159,11 +194,12 @@ function editTask(id) {
   let noteTask = $("#" + id).siblings().filter('.noteTask')[0].innerHTML;  // el elemento hermano que tiene la clase de noteTask
 
   let element = $("#" + id).parent(); // donde esta el texto, las notas y las subtareas
+  //console.log(element);
 
   element.empty(); // falta preocuparse por las tareas que tienen subtareas
   element.append(`
-    <form class="formEditTask"> 
-      <input type="text" autocomplete="off" value="${textTask}" class="inputEditText ${id}" required>
+    <form class="formEditTask ${id}"> 
+      <input type="text" autocomplete="off" value="${textTask}" class="inputEditText ${id}" placeholder="Name of task" required>
       <input type="text" autocomplete="off" value="${noteTask}" class="inputEditNotes ${id}">
       <input type="hidden" class="idTaskTarget" value="${id}">
       <button class="editButton" type="submit"></button>
@@ -179,7 +215,14 @@ $("body").on('submit', '.formEditTask', (e) => {
   let nameTask = $(`.inputEditText.${id}`).val(); // document.getElementById('2345').value; //= $('#formEditTask').filter('inputEditText'); //e.currentTarget.getElementsByClassName('inputEditText');
   let noteTask = $(`.inputEditNotes.${id}`).val();
 
-  $("#formEditTask").empty();
+  let targetParent = e.currentTarget.parentNode;
+  console.log(targetParent);
+
+  $(".formEditTask").empty();
+  targetParent.insertBefore(`
+    <p class="taskName mb-0" id="${id}">${nameTask} </p><p class="taskDif mb-2">dificultad</p> 
+    <p class="noteTask mb-0">${nameTask}</p>
+  `, null);
 
   $.ajax({
     type: 'POST',
@@ -203,4 +246,7 @@ $("body").on('submit', '.formEditTask', (e) => {
       changeSync('error');
     }
   });
+
+
 });
+

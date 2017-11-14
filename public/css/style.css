@@ -30,6 +30,14 @@
   border-radius: 2px;
 }
 
+.taskDif:hover{
+  font-weight: bold;
+}
+
+.taskDifActive{
+  font-weight: bold;
+}
+
 #addTaskContainer .taskDif{  /* solo las dificultades debajo del form */
   cursor : pointer;
 }
@@ -53,7 +61,7 @@
 /* icono sync */
 
 #syncIcon{
-  color : #c7c7c7;
+  color : #0ee2f1; /*c7c7c7*/
 }
 
 /* containers */
@@ -67,7 +75,18 @@
 .inputEditText{
   width: 80%;
   border-style: none;
+  border-bottom : #CFC7C7 solid 1px;
   padding: 0;
+}
+
+.inputEditText:focus{
+  outline: none;
+  border-bottom : #000 solid 1px;
+}
+
+.inputEditNotes:focus{
+  outline: none;
+  border-bottom : #000 solid 1px;
 }
 
 .inputEditNotes{
@@ -75,6 +94,7 @@
   font-size: 0.8em;
   width: 70%;
   border-style: none;
+  border-bottom : #CFC7C7 solid 1px;
   padding: 0;
 }
 

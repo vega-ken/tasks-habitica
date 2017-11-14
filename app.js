@@ -9,8 +9,6 @@ const indexRoutes = require('./routes/index');
 
 const app = express();
 
-
-
 const port = 3000;
 
 
