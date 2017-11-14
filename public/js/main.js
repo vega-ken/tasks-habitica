@@ -104,23 +104,25 @@ function sucessAddTask(data){
 function successCheckTask(data){
   //console.log('logro chequear la tarea a traves de una funcion que llama una funcion');
   console.log(`HP : ${data.hp}, MP : ${data.hp}, XP : ${data.exp}, LVL : ${data.lvl}, GP : ${data.gp}`);
+  let result = document.getElementById('statsText');
+  result.innerHTML = `HP : ${data.hp}, MP : ${data.hp}, XP : ${data.exp}, LVL : ${data.lvl}, GP : ${data.gp}`;
 }
 
 function changeSync(state) {
   if (state == 'waiting') {
     //cambiar clase a waiting. fa fa-2x fa-refresh fa-spin ml-auto . syncIcon
     $("#syncIcon").removeClass();
-    $("#syncIcon").addClass("fa fa-2x fa-spinner fa-spin ml-auto");
+    $("#syncIcon").addClass("fa fa-2x fa-spinner fa-spin");
   }
   else if (state == 'ok') {
     //cambiar clase a original. fa fa-2x fa-check-circle-o ml-auto
     $("#syncIcon").removeClass();
-    $("#syncIcon").addClass("fa fa-2x fa-check-circle-o ml-auto");
+    $("#syncIcon").addClass("fa fa-2x fa-check-circle-o");
   }
   else {
     //cambiar clase a error
     $("#syncIcon").removeClass();
-    $("#syncIcon").addClass("fa fa-2x fa-exclamation-circle ml-auto");
+    $("#syncIcon").addClass("fa fa-2x fa-exclamation-circle");
   }
 }
 

@@ -110,4 +110,17 @@ router.post('/updateTask', (req, res) => {
 
 })
 
+//OTHER ROUTES
+router.get('/dailies', (req,res) => {
+  res.render('dailies');
+});
+
+router.get('/habits', (req,res) => {
+  res.render('dailies');
+});
+
+router.get('/rewards', (req,res) => {
+  res.render('dailies');
+});
+
 module.exports = router;

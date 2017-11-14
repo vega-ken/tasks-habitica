@@ -13,7 +13,7 @@
 }
 
 .rowTask{
-  border-bottom: 1px solid #CFC7C7;
+  border-top: 1px solid #CFC7C7;
 }
 
 .taskName{
@@ -30,7 +30,7 @@
   border-radius: 2px;
 }
 
-.taskDif:hover{
+#addTaskContainer .taskDif:hover{ /* solo las dificultades debajo del form */
   font-weight: bold;
 }
 
@@ -66,8 +66,13 @@
 
 /* containers */
 
-#containerTasks > :first-child{ /* linea arriba a la primera fila */ /* #containerTasks div.row:first-child */
-  border-top: 1px solid #CFC7C7;
+#containerTasks{
+  margin-bottom: 40px;
+}
+
+#containerTasks > :last-child{ /* linea arriba a la primera fila */ /* #containerTasks div.row:first-child */
+  /*border-top: 1px solid #CFC7C7;*/
+  border-bottom: none;
 }
 
 /* form para editar tareas */
@@ -102,3 +107,18 @@
   visibility: hidden; /* could change to display : none; */
 }
 
+/* FOOTER */
+
+.footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  height: 40px; /* Set the fixed height of the footer here */
+  /*line-height: 60px; */ /* Vertically center the text there */
+  background-color: #17a2b8;
+}
+
+#statsText{
+  width : 30%;
+  max-height : inherit;
+}
