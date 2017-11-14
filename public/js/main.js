@@ -98,7 +98,7 @@ function sucessAddTask(data){
     </div>
 
   </div>
-  `);
+  `); // todo : onclick -> debería estar en js como eventListener y no en html
 }
 
 function successCheckTask(data){
@@ -134,11 +134,8 @@ function getPriority(){
 
 function changePriorityToNumber(priorityText){
   if (priorityText == "Hard") return 2;
-  
   else if (priorityText == "Medium") return 1.5;
-
   else if (priorityText == "Easy") return 1;
-
   else return 0.1;
 }
 
@@ -164,23 +161,17 @@ function gettingTaskSliced(textNewTask, indexNoteTask) {
 
 function convertPriorityToText(priorityNumber) {
   if (priorityNumber == 2) return "Hard";
-  
   else if (priorityNumber == 1.5) return "Medium";
-
   else if (priorityNumber == 1) return "Easy";
-
   else return "Trivial";
 }
 
 function changeActiveDif(e){
-  //console.log(e.target);
   //buscar el span con la clase active y quitarsela
-    let formDifs = document.querySelectorAll('#addTaskContainer span.taskDif');
-    for(let i = 0; i < formDifs.length; i++){
-      formDifs[i].classList.remove('taskDifActive');
-    }
+  let oldTarget = document.querySelector('#addTaskContainer span.taskDifActive');
+  oldTarget.classList.remove('taskDifActive');
   //agregar la clase taskDifActive al target seleccionado 
-    e.target.className += ' taskDifActive';
+  e.target.className += ' taskDifActive';
 }
 
 function deleteTask(id) {
@@ -191,8 +182,18 @@ function deleteTask(id) {
 }
 
 function editTask(id) {
+  // convertir el row de tarea en un form
+  // modificar el form y luego al presionar enter, tomar la data del form y convertirla en el row
+  // enviar la data del form al servidor de habitica y esperar a por su respuesta
+
   console.log('edit : ' + id);
+  let textTask2 = document.querySelector(id).innerHTML; /* ids no deberían empezar con números */
   let textTask = $("#" + id).html();
+  console.log('textTask');
+  console.log(textTask);
+  console.log('textTask2');
+  console.log(textTask2);
+  /*
   let noteTask = $("#" + id).siblings().filter('.noteTask')[0].innerHTML;  // el elemento hermano que tiene la clase de noteTask
 
   let element = $("#" + id).parent(); // donde esta el texto, las notas y las subtareas
@@ -207,6 +208,7 @@ function editTask(id) {
       <button class="editButton" type="submit"></button>
     </form>
   `);
+  */
 }
 
 // SUBMITING THE CHANGES TO THE HABITICA SERVER
