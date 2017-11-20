@@ -51,6 +51,12 @@ After using the program, press Ctrl+C on the terminal to stop it.
 
 * If the command *npm start* gives you an error, you could have some service actually listening at port 3000. Check if port 3000 is listening on your machine.
 
+* If the sync icon gets an error it could be various things.
+  * habitica servers have problems right now and cannot respond
+  * one or more actions on the app were not synced with Habitica
+
+  to avoid the last one, try to make actions one by one making sure the sync icon is with the check meaning that. For example if you try to delete three To-Dos in a short period of time, the last one probably wont happen
+
 ## Ideas for next versions
 
 - [ ] Enable Dailies and Habits (those will be added to the navbar as links).
