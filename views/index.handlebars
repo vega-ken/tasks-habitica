@@ -18,12 +18,12 @@
   {{#each data}}
     <div class="row rowTask pt-2 pb-2">
       <div class="col-8 col-xs-8 col-sm-8 col-md-8 col-lg-8">        
-        <p class="taskName mb-0" id="{{id}}">{{text}} </p><p class="taskDif task{{dificultad priority}} mb-2">{{dificultad priority}}</p> 
+        <p class="taskName mb-0" id="taskNameId-{{id}}">{{text}} </p><p class="taskDif task{{dificultad priority}} mb-2">{{dificultad priority}}</p> 
         <p class="noteTask mb-0">{{notes}}</p>
         {{#each checklist}}
         <div class='checkbox ml-2'>
           <label class='nombreSubtarea verticalAlign mb-1'>
-            <input id="{{id}}" type='checkbox' {{#if completed}}checked{{/if}}> <!--onclick='checkboxCheckedFunction(value,name)'>-->
+            <input id="{{id}}" type='checkbox' {{#if completed}}checked{{/if}}> 
             <span class="small ml-1">{{text}}</span>
           </label>
         </div>
@@ -31,13 +31,13 @@
       </div>
 
       <div class="col-1 col-xs-1 col-sm-1 col-md-1 col-lg-1 text-center">
-        <i class='fa fa-plus action-buttons'></i>
+        <i id="addSubTaskId-{{id}}" class='fa fa-plus action-buttons addSubTaskId'></i>
       </div>
       <div class="col-1 col-xs-1 col-sm-1 col-md-1 col-lg-1 text-center">
         <i class='fa fa-pencil-square-o action-buttons' onclick="editTask('{{id}}')"></i>
       </div>
       <div class="col-1 col-xs-1 col-sm-1 col-md-1 col-lg-1 text-center">
-        <i class='fa fa-trash action-buttons' onclick="deleteTask('{{id}}')"></i>
+        <i id="deleteTaskId-{{id}}" class='fa fa-trash action-buttons deleteTaskId'"></i>
       </div>
       <div class="col-1 col-xs-1 col-sm-1 col-md-1 col-lg-1 text-center">
         <i class='fa fa-arrows-v action-buttons'></i>

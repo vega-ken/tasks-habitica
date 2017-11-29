@@ -13,14 +13,29 @@ $("document").ready(() => {
   //check the task by doubleClicking
 
   
-
+  //CHECK THE TASK
   $("body").on('dblclick', `p.taskName`, (e) => {
     let id = e.currentTarget.getAttribute('id');
+    let idNew = id.slice(11); // taskNameId-89093e59-12f2-4371-958e-37e5084acee4
     changeSync('waiting');
     $("#" + id).parent().parent().remove(); // remover la fila entera de esa tarea
-    let data = { id: id };
+    let data = { id: idNew };
     makeRequest('POST','checkTask',data, successCheckTask);
   });
+
+  // ---- ADDING EVENTS ---
+
+  //DELETE EVENTS
+  let deleteTasksButtons = document.querySelectorAll('.deleteTaskId');
+  for (let i = 0 ; i < deleteTasksButtons.length ; i++){
+    deleteTasksButtons[i].addEventListener('click', deleteTask);
+  }
+
+  //ADD SUB TASK EVENTS
+  let addSubTaskButtons = document.querySelectorAll('.addSubTaskId');
+  for (let i = 0 ; i < addSubTaskButtons.length ; i++){
+    addSubTaskButtons[i].addEventListener('click', addSubTask);
+  }
 
 });
 
@@ -51,11 +66,35 @@ function successCheckTask(data){
 }
 
 
-
-function deleteTask(id) {
+function addSubTask(e){
   changeSync('waiting');
+  console.log(e.currentTarget);
+  //el padre, el padre : ese es el contendor de toda la fila tarea
+  // luego el primer hijo es donde se agrega el form. asi que es target
+  let id = e.currentTarget.id; //addSubTaskId-89093e59-12f2-4371-958e-37e5084acee4
+  let target = e.currentTarget.parentNode.parentNode.firstElementChild;
+  console.log(target);
+
+  // ya con el target, creas el elemento
+
+  target.append(
+    `<form class='formnewsubtask'>
+      <input type='text' placeholder='Add new subtask' autocomplete='off'/>
+    </form>`); // onkeypress='return addTheSubTask(event,id,value)'
+
+
+}
+
+function enterAddSubTask(id){
+
+}
+
+function deleteTask(e) {  // works.. with an error but works
+  changeSync('waiting');
+  let id = e.currentTarget.id; //deleteTaskId-89093e59-12f2-4371-958e-37e5084acee4
   $("#" + id).parent().parent().remove();
-  let data = { id: id };
+  let idNew = id.slice(13);
+  let data = { id: idNew };
   makeRequest('POST','deleteTask',data);
 }
 
