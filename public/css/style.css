@@ -1,6 +1,6 @@
 .noteTask{
   color: #7A7C7D;
-  font-size: 0.8em;
+  font-size: 0.8rem;
 }
 
 .verticalAlign{
@@ -22,12 +22,12 @@
 
 /* dificultad */
 .taskDif{
-  font-size: 10px;
-  padding-left : 2px;
-  padding-right: 2px;
+  font-size: .8rem;
+  font-weight: 300;
+  padding : 0 .5rem;
   display: inline;
   color: #fff;
-  border-radius: 2px;
+  border-radius: 2rem;
 }
 
 #addTaskContainer .taskDif:hover{ /* solo las dificultades debajo del form */
@@ -68,7 +68,7 @@
 /* containers */
 
 #containerTasks{
-  margin-bottom: 40px;
+  margin-bottom: 40px; /* por el navbar */
 }
 
 #containerTasks > :last-child{ /* linea arriba a la primera fila */ /* #containerTasks div.row:first-child */
