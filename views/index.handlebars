@@ -24,9 +24,10 @@
         <p class="noteTask mb-0">{{notes}}</p>
         {{#each checklist}}
         <div class='checkbox ml-2'>
-          <label class='nombreSubtarea verticalAlign mb-1'>
-            <input id="{{id}}" type='checkbox' {{#if completed}}checked{{/if}}> 
-            <span class="ml-1">{{text}}</span>
+          <input id="checkbox{{id}}" type="checkbox" class="subtask__checkbox-input" {{#if completed}}checked{{/if}}> 
+          <label for="checkbox{{id}}" class="subtask__checkbox-label">
+            <span class="subtask__checkbox-button"></span>
+            {{text}}
           </label>
         </div>
         {{/each}}
