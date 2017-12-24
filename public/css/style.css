@@ -114,17 +114,33 @@
   /*line-height: 60px; */ /* Vertically center the text there */
   background-color: #17a2b8;
 }
-
+/*
 #statsText{
-  width : 30%;
+  width : 50%;
   max-height : inherit;
-}
+}*/
 
-#syncIcon{
+.footer__icon, #syncIcon{
   color : #ffffff; /*c7c7c7*/ /* 0ee2f1 */
   /*font-size: 30px;*/
 }
 
+.footer__icon.fa-heart{
+  color: red;
+}
+
+.footer__icon.fa-flask{
+  color: blue;
+}
+
+.footer__icon.fa-database{
+  color: yellow;
+}
+
+.footer .footer__stats{
+  margin-top: .2rem;
+  color: #fff;
+}
 
 /* Checkbox */
 

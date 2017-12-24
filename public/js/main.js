@@ -62,7 +62,7 @@ function enterNewTask(e){
 function successCheckTask(data){
   console.log(`HP : ${data.hp}, MP : ${data.hp}, XP : ${data.exp}, LVL : ${data.lvl}, GP : ${data.gp}`);
   let result = document.getElementById('statsText');
-  result.innerHTML = `HP : ${data.hp}, MP : ${data.hp}, XP : ${data.exp}, LVL : ${data.lvl}, GP : ${data.gp}`;
+  result.innerHTML = `<i class="fa fa-heart footer__icon" aria-hidden="true"></i> : ${Math.round(data.hp)} &nbsp; <i class="fa fa-flask footer__icon" aria-hidden="true"></i> : ${Math.round(data.mp)} &nbsp; <i class="fa fa-database footer__icon" aria-hidden="true"></i> : ${Math.round(data.gp * 100) / 100}`;
 }
 
 
