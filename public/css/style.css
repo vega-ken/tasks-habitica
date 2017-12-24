@@ -20,6 +20,10 @@
   display : inline;
 }
 
+.nombreSubtarea span{ 
+  font-size : .8rem;
+}
+
 /* dificultad */
 .taskDif{
   font-size: .8rem;

@@ -9,7 +9,9 @@
           </span>
         </div>
       </form>
-      <span class="taskDif taskHard">Hard</span> <span class="taskDif taskMedium taskDifActive">Medium</span> <span class="taskDif taskEasy">Easy</span> <span class="taskDif taskTrivial">Trivial</span>
+      <div>
+        <span class="taskDif taskHard">Hard</span> <span class="taskDif taskMedium taskDifActive">Medium</span> <span class="taskDif taskEasy">Easy</span> <span class="taskDif taskTrivial">Trivial</span>
+      </div>
     </div>
   </div>
 </div>
@@ -24,7 +26,7 @@
         <div class='checkbox ml-2'>
           <label class='nombreSubtarea verticalAlign mb-1'>
             <input id="{{id}}" type='checkbox' {{#if completed}}checked{{/if}}> 
-            <span class="small ml-1">{{text}}</span>
+            <span class="ml-1">{{text}}</span>
           </label>
         </div>
         {{/each}}
