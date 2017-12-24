@@ -14,7 +14,8 @@ const port = 3000;
 
 // HELPERS HANDLEBARS
 const {
-  dificultad
+  dificultad,
+  dificultadClass
 } = require ('./helpers/hbs');
 
 // MIDDLEWARE
@@ -26,7 +27,8 @@ app.use(bodyParser.json());
 // Middleware handlebars -- para usar template engines
 app.engine('handlebars', exphbs({
   helpers : {
-    dificultad : dificultad
+    dificultad : dificultad,
+    dificultadClass : dificultadClass
   },
   defaultLayout: 'main' // main sera el layout por defecto para todas las vistas
 }));

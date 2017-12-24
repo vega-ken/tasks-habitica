@@ -10,7 +10,10 @@
         </div>
       </form>
       <div>
-        <span class="taskDif taskHard">Hard</span> <span class="taskDif taskMedium taskDifActive">Medium</span> <span class="taskDif taskEasy">Easy</span> <span class="taskDif taskTrivial">Trivial</span>
+        <span class="task-difficulty task-difficulty--hard">Hard</span>&nbsp;
+        <span class="task-difficulty task-difficulty--medium task-difficulty--active">Medium</span>&nbsp;
+        <span class="task-difficulty task-difficulty--easy">Easy</span>&nbsp;
+        <span class="task-difficulty task-difficulty--trivial">Trivial</span>
       </div>
     </div>
   </div>
@@ -18,10 +21,11 @@
 
 <div class="container" id="containerTasks">
   {{#each data}}
-    <div class="row rowTask pt-2 pb-2">
+    <div class="row row-task pt-2 pb-2">
       <div class="col-8 col-xs-8 col-sm-8 col-md-8 col-lg-8">        
-        <p class="taskName mb-0" id="taskNameId-{{id}}">{{text}} </p><p class="taskDif task{{dificultad priority}} mb-2">{{dificultad priority}}</p> 
-        <p class="noteTask mb-0">{{notes}}</p>
+        <p class="row-task__task-name mb-0" id="taskNameId-{{id}}">{{text}} </p>
+        <p class="task-difficulty task-difficulty--{{dificultadClass priority}} mb-2">{{dificultad priority}}</p> 
+        <p class="row-task__note-task mb-0">{{notes}}</p>
         {{#each checklist}}
         <div class="checkbox ml-2">
           <input id="checkboxId-{{id}}" type="checkbox" class="subtask__checkbox-input" {{#if completed}}checked{{/if}}> 

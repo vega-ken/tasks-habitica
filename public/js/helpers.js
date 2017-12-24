@@ -53,14 +53,14 @@ function separateTaskAndNotes(textNewTask){
 
 function changeActiveDif(e){
   //buscar el span con la clase active y quitarsela
-  let oldTarget = document.querySelector('#addTaskContainer span.taskDifActive');
-  oldTarget.classList.remove('taskDifActive');
-  //agregar la clase taskDifActive al target seleccionado 
-  e.target.className += ' taskDifActive';
+  let oldTarget = document.querySelector('#addTaskContainer span.task-difficulty--active');
+  oldTarget.classList.remove('task-difficulty--active');
+  //agregar la clase task-difficulty--active al target seleccionado 
+  e.target.className += ' task-difficulty--active';
 }
 
 function getPriority(){
-  let priority = document.querySelector('.taskDifActive').innerHTML;
+  let priority = document.querySelector('.task-difficulty--active').innerHTML;
   priority = changePriorityToNumber(priority)
   return priority;
 }
@@ -98,17 +98,17 @@ function sucessAddTask(data){
   let priorityTask = convertPriorityToText(data.priority);
   let notesReply;
   if (data.notes) 
-    notesReply = `<p class="noteTask mb-0">${data.notes}</p>`;
+    notesReply = `<p class="row-task__note-task mb-0">${data.notes}</p>`;
   else
     notesReply = ``;
   
   //agregarlo a la vista
   let containerTasks = document.getElementById('containerTasks');
   let newElement = document.createElement('div');
-  newElement.classList += 'row rowTask pt-2 pb-2'; // agregar las clases al elemento nuevo
+  newElement.classList += 'row row-task pt-2 pb-2'; // agregar las clases al elemento nuevo
   newElement.innerHTML = `
     <div class="col-8 col-xs-8 col-sm-8 col-md-8 col-lg-8">        
-      <p class="taskName mb-0" id="${data.id}">${data.text} </p><p class="taskDif task${priorityTask} mb-2">${priorityTask}</p> 
+      <p class="row-task__task-name mb-0" id="${data.id}">${data.text} </p><p class="task-difficulty task${priorityTask} mb-2">${priorityTask}</p> 
       ${notesReply}
     </div>
 

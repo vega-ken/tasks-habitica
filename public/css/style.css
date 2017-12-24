@@ -1,7 +1,7 @@
 
 /* TaskRow :  Fila de tarea */
 
-.noteTask{
+.row-task__note-task{
   color: #7A7C7D;
   font-size: 0.8rem;
 }
@@ -10,18 +10,18 @@
   vertical-align: middle;
 }
 
-.rowTask{
+.row-task{
   border-top: 1px solid #CFC7C7;
 }
 
-.taskName{
+.row-task__task-name{
   display : inline;
 }
 
 
 /* Dificultad spans */
 
-.taskDif{
+.task-difficulty{
   font-size: .8rem;
   font-weight: 300;
   padding : 0 .5rem;
@@ -30,31 +30,35 @@
   border-radius: 2rem;
 }
 
-#addTaskContainer .taskDif:hover{ /* solo las dificultades debajo del form */
-  font-weight: bold;
-}
-
-.taskDifActive{
-  font-weight: bold;
-}
-
-#addTaskContainer .taskDif{  /* solo las dificultades debajo del form */
+#addTaskContainer .task-difficulty{  /* solo las dificultades debajo del form */
   cursor : pointer;
 }
 
-.taskHard{
+#addTaskContainer .task-difficulty:hover{ /* solo las dificultades debajo del form */
+  font-weight: bold;
+  box-shadow: 0 .5rem 3rem rgba(0, 0, 0, 0.2);
+}
+
+.task-difficulty--active{
+  font-weight: bold;
+  box-shadow: 0 .5rem 3rem rgba(0, 0, 0, 0.2);
+}
+
+
+
+.task-difficulty--hard{
   background-color: #d83131;
 }
 
-.taskMedium{
+.task-difficulty--medium{
   background-color: #e17218;
 }
 
-.taskEasy{
+.task-difficulty--easy{
   background-color: #6fd633;
 }
 
-.taskTrivial{
+.task-difficulty--trivial{
   background-color: #17dbf5;
 }
 
@@ -120,9 +124,13 @@
   max-height : inherit;
 }*/
 
-.footer__icon, #syncIcon{
+.footer{
   color : #ffffff; /*c7c7c7*/ /* 0ee2f1 */
   /*font-size: 30px;*/
+}
+
+.footer .footer__stats{
+  margin-top: .2rem;
 }
 
 .footer__icon.fa-heart{
@@ -137,10 +145,7 @@
   color: yellow;
 }
 
-.footer .footer__stats{
-  margin-top: .2rem;
-  color: #fff;
-}
+
 
 /* Checkbox */
 

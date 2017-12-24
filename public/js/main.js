@@ -1,7 +1,7 @@
 $("document").ready(() => {
 
   //usuario cambia dificultad de nuevas tareas
-  let formDifs = document.querySelectorAll('#addTaskContainer span.taskDif');
+  let formDifs = document.querySelectorAll('#addTaskContainer span.task-difficulty');
   for(let i = 0; i < formDifs.length; i++){
     formDifs[i].addEventListener('click', changeActiveDif);
   }
@@ -14,7 +14,7 @@ $("document").ready(() => {
 
   
   //CHECK THE TASK
-  $("body").on('dblclick', `p.taskName`, (e) => {
+  $("body").on('dblclick', `p.row-task__task-name`, (e) => {
     let id = e.currentTarget.getAttribute('id');
     let idNew = id.slice(11); // taskNameId-89093e59-12f2-4371-958e-37e5084acee4
     changeSync('waiting');
@@ -143,8 +143,9 @@ $("body").on('submit', '.formEditTask', (e) => {
 
   $(".formEditTask").empty();
   targetParent.insertBefore(`
-    <p class="taskName mb-0" id="${id}">${nameTask} </p><p class="taskDif mb-2">dificultad</p> 
-    <p class="noteTask mb-0">${nameTask}</p>
+    <p class="row-task__task-name mb-0" id="${id}">${nameTask} </p>
+    <p class="task-difficulty mb-2">dificultad</p> 
+    <p class="row-task__note-task mb-0">${nameTask}</p>
   `, null);
 
   $.ajax({
