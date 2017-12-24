@@ -1,11 +1,9 @@
+
+/* TaskRow :  Fila de tarea */
+
 .noteTask{
   color: #7A7C7D;
   font-size: 0.8rem;
-}
-
-.verticalAlign{
-  display: flex;
-  align-items: center;
 }
 
 .action-buttons{
@@ -20,7 +18,9 @@
   display : inline;
 }
 
-/* dificultad */
+
+/* Dificultad spans */
+
 .taskDif{
   font-size: .8rem;
   font-weight: 300;
@@ -58,12 +58,6 @@
   background-color: #17dbf5;
 }
 
-/* icono sync */
-
-#syncIcon{
-  color : #ffffff; /*c7c7c7*/ /* 0ee2f1 */
-  /*font-size: 30px;*/
-}
 
 /* containers */
 
@@ -76,7 +70,8 @@
   border-bottom: none;
 }
 
-/* form para editar tareas */
+
+/* Form para editar tareas */
 
 .inputEditText{
   width: 80%;
@@ -108,7 +103,8 @@
   visibility: hidden; /* could change to display : none; */
 }
 
-/* FOOTER */
+
+/* Footer */
 
 .footer {
   position: fixed;
@@ -124,7 +120,13 @@
   max-height : inherit;
 }
 
-/* checkbox */
+#syncIcon{
+  color : #ffffff; /*c7c7c7*/ /* 0ee2f1 */
+  /*font-size: 30px;*/
+}
+
+
+/* Checkbox */
 
 .subtask__checkbox-label{
   position: relative;
@@ -136,7 +138,7 @@
   display: inline-block;
   width: 1rem;
   height: 1rem;
-  border: 2px solid greenyellow;
+  border: 2px solid #17a2b8;
   border-radius: 2px;
 
   position: absolute;
@@ -157,7 +159,7 @@
   left: 50%;
   transform: translate(-50%, -50%);
 
-  background-color: greenyellow;
+  background-color: #17a2b8;
 
   opacity: 0;
   transition: opacity .3s;
