@@ -1,4 +1,4 @@
 module.exports = {
-  apiUser : proccess.env.API_USER,
-  apiKey : proccess.env.API_KEY
+  apiUser : process.env.API_USER,
+  apiKey : process.env.API_KEY
 }
