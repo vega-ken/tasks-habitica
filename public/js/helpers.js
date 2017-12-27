@@ -104,7 +104,6 @@ function makeRequest(method, route, data, successFunction) {
 function sucessAddTask(data){ 
   let priorityTask = convertPriorityToText(data.priority);
   let priorityTaskClass = classPriorityTask(priorityTask);
-  let notesReply;
   
   //agregarlo a la vista
   let containerTasks = document.getElementById('containerTasks');
@@ -125,7 +124,7 @@ function sucessAddTask(data){
         <i id="addSubTaskId-${data.id}" class='fa fa-plus action-buttons addSubTaskId'></i>
       </div>
     <div class="col-1 col-xs-1 col-sm-1 col-md-1 col-lg-1 text-center">
-      <i class='fa fa-pencil-square-o action-buttons' onclick="editTask('${data.id}')"></i>
+      <i id="editTaskId-${data.id}" class='fa fa-pencil-square-o action-buttons editTaskId'></i>
     </div>
     <div class="col-1 col-xs-1 col-sm-1 col-md-1 col-lg-1 text-center">
       <i id="deleteTaskId-${data.id}" class='fa fa-trash action-buttons deleteTaskId'></i>
@@ -164,6 +163,21 @@ function successAddSubTask(data){
         <span class="subtask__checkbox-button"></span>
         ${textNewSubTask}
       </label>
+    </div>
+  `);
+}
+
+function successUpdateTask(data){
+  let priorityTask = convertPriorityToText(data.priority);
+  let priorityTaskClass = classPriorityTask(priorityTask);
+ 
+  // borrar el form y reemplazarlos en la fila
+  $(`#formEditTask-${data.id}`).remove();
+  $(`#rowTask-${data.id}`).prepend(`
+    <div id="rowTask-${data.id}">        
+      <p class="row-task__task-name" id="taskNameId-${data.id}">${data.text}</p>
+      <p class="task-difficulty task-difficulty--${priorityTaskClass}">${priorityTask}</p> 
+      <p class="row-task__note-task mb-0">${data.notes}</p>
     </div>
   `);
 }

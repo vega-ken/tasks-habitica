@@ -17,8 +17,19 @@ $("document").ready(() => {
   //usuario desea agregar nueva subtarea (incluso a tareas dinamicamente generadas)
   $("body").on('click', 'i.addSubTaskId', addSubTask );
 
+  //usuario desea editar una tarea
+  $("body").on('click', 'i.editTaskId', editTask );
+
   //usuario marca/desmarca una subtarea
   $("body").on('click', 'input.subtask__checkbox-input', checkSubTask );
+
+  $("#containerTasks").sortable(
+    {
+      handle : ".vertical-control-jquery-ui" // elemento quien dirige la propiedad sortable
+    }
+  );
+
+  
 
 });
 
@@ -114,76 +125,44 @@ function checkSubTask(e){
 
 /* ------- EDIT TASK _START --------- */
 
-function editTask(id) {
-  // convertir el row de tarea en un form
-  // modificar el form y luego al presionar enter, tomar la data del form y convertirla en el row
-  // enviar la data del form al servidor de habitica y esperar a por su respuesta
+function editTask(e) {
+  // cambiar el contenido del rowTask y ponerle en un form
+  let id = e.currentTarget.id; // editTaskId-2f5a36e2-fb51-4efc-a801-63aa4ce58de6
+  id = id.slice(11);
 
-  console.log('edit : ' + id);
-  let textTask2 = document.querySelector(id).innerHTML; /* ids no deberían empezar con números */
-  let textTask = $("#" + id).html();
-  console.log('textTask');
-  console.log(textTask);
-  console.log('textTask2');
-  console.log(textTask2);
-  /*
-  let noteTask = $("#" + id).siblings().filter('.noteTask')[0].innerHTML;  // el elemento hermano que tiene la clase de noteTask
+  let rowTarget = $(`#rowTask-${id}`);
 
-  let element = $("#" + id).parent(); // donde esta el texto, las notas y las subtareas
-  //console.log(element);
+  let textTask = rowTarget.children().first()[0].innerText;
+  let noteTask = rowTarget.children().last()[0].innerText; // asi no tenga texto, igual el elemento esta
 
-  element.empty(); // falta preocuparse por las tareas que tienen subtareas
-  element.append(`
-    <form class="formEditTask ${id}"> 
-      <input type="text" autocomplete="off" value="${textTask}" class="inputEditText ${id}" placeholder="Name of task" required>
-      <input type="text" autocomplete="off" value="${noteTask}" class="inputEditNotes ${id}">
-      <input type="hidden" class="idTaskTarget" value="${id}">
-      <button class="editButton" type="submit"></button>
+  rowTarget.empty(); // or children().remove(); 
+    
+  rowTarget.append(`
+    <form id="formEditTask-${id}" class="form-edit-task"> 
+      <input type="text" autocomplete="off" value="${textTask}" class="inputEditText" placeholder="Name of task" required>
+      <input type="text" autocomplete="off" value="${noteTask}" class="inputEditNotes" placeholder="Notes from task">
+      <button class="editButton" type="submit">Submit</button>
     </form>
-  `);
-  */
+  `)
 }
 
 // SUBMITING THE CHANGES TO THE HABITICA SERVER OF EDIT FORM
-$("body").on('submit', '.formEditTask', (e) => {
+$("body").on('submit', '.form-edit-task', (e) => {
   e.preventDefault();
+
+  // conseguir los valores de los inputs
+  let id = e.currentTarget.id; // formEditTask-2f5a36e2-fb51-4efc-a801-63aa4ce58de6
+  id = id.slice(13);
+  let newNameTask = document.querySelector(`#formEditTask-${id} input.inputEditText`).value;
+  let newNoteTask = document.querySelector(`#formEditTask-${id} input.inputEditNotes`).value;
+  let data = { id: id, nameTask: newNameTask, noteTask: newNoteTask }
+
+  //deberia verificarse que no se deja la tarea vacia...
+
+  
+  // mandar el request y esperar a por la respuesta
   changeSync('waiting');
-  let id = e.currentTarget.getElementsByClassName('idTaskTarget')[0].defaultValue;
-  let nameTask = $(`.inputEditText.${id}`).val(); // document.getElementById('2345').value; //= $('#formEditTask').filter('inputEditText'); //e.currentTarget.getElementsByClassName('inputEditText');
-  let noteTask = $(`.inputEditNotes.${id}`).val();
-
-  let targetParent = e.currentTarget.parentNode;
-  console.log(targetParent);
-
-  $(".formEditTask").empty();
-  targetParent.insertBefore(`
-    <p class="row-task__task-name mb-0" id="${id}">${nameTask} </p>
-    <p class="task-difficulty mb-2">dificultad</p> 
-    <p class="row-task__note-task mb-0">${nameTask}</p>
-  `, null);
-
-  $.ajax({
-    type: 'POST',
-    dataType: 'json',
-    url: window.location.href + "updateTask",
-    data: { id: id, nameTask: nameTask, noteTask: noteTask },
-    success: (reply) => {
-      console.log(reply);
-      let body = JSON.parse(reply.dataResponse.body);
-      if (body.success == true) {
-        changeSync('ok');
-        //let data = body.data;
-        //console.log(`HP : ${data.hp}, MP : ${data.hp}, XP : ${data.exp}, LVL : ${data.lvl}, GP : ${data.gp}`);
-      }
-      else {
-        changeSync('error');
-      }
-    },
-    error: (reply) => {
-      console.log(reply);
-      changeSync('error');
-    }
-  });
+  makeRequest('POST', 'updateTask', data, successUpdateTask);
 });
 
 /* ------- EDIT TASK - END --------- */

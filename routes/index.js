@@ -136,7 +136,7 @@ router.post('/updateTask', (req, res) => {
     body: {
       text: nameTask,
       notes: noteTask,
-      //priority: priority
+      //priority: priority -- proximamente
     },
     headers: {
       'x-api-user': keys.apiUser,

@@ -3,7 +3,7 @@
     <div class="col-12 col-xs-12 col-sm-12 col-md-12 col-lg-12 mb-3">
       <form id="formAddTask" class="mb-1">
         <div class="input-group">
-          <input type="text" id="textNewTask" class="form-control" autocomplete="off" placeholder="Add a task" autofocus required>
+          <input type="text" id="textNewTask" class="form-control" autocomplete="off" placeholder="Add a task" required>
           <span class="input-group-btn">
             <button class="btn btn-default" type="submit"><i class="fa fa-plus"></i></button>
           </span>
@@ -46,12 +46,12 @@
         <i id="addSubTaskId-{{id}}" class='fa fa-plus action-buttons addSubTaskId'></i>
       </div>
       <div class="col-1 col-xs-1 col-sm-1 col-md-1 col-lg-1 text-center">
-        <i class='fa fa-pencil-square-o action-buttons' onclick="editTask('{{id}}')"></i>
+        <i id="editTaskId-{{id}}" class='fa fa-pencil-square-o action-buttons editTaskId'></i>
       </div>
       <div class="col-1 col-xs-1 col-sm-1 col-md-1 col-lg-1 text-center">
         <i id="deleteTaskId-{{id}}" class='fa fa-trash action-buttons deleteTaskId'></i>
       </div>
-      <div class="col-1 col-xs-1 col-sm-1 col-md-1 col-lg-1 text-center">
+      <div class="col-1 col-xs-1 col-sm-1 col-md-1 col-lg-1 text-center vertical-control-jquery-ui">
         <i class='fa fa-arrows-v action-buttons'></i>
       </div>
 
