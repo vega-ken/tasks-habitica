@@ -105,25 +105,25 @@ function sucessAddTask(data){
   let priorityTask = convertPriorityToText(data.priority);
   let priorityTaskClass = classPriorityTask(priorityTask);
   let notesReply;
-  if (data.notes) 
-    notesReply = `<p class="row-task__note-task mb-0">${data.notes}</p>`;
-  else
-    notesReply = ``;
   
   //agregarlo a la vista
   let containerTasks = document.getElementById('containerTasks');
   let newElement = document.createElement('div');
   newElement.classList += 'row row-task pt-2 pb-2'; // agregar las clases al elemento nuevo
   newElement.innerHTML = `
-    <div class="col-8 col-xs-8 col-sm-8 col-md-8 col-lg-8">        
-      <p class="row-task__task-name" id="taskNameId-${data.id}">${data.text}</p>
-      <p class="task-difficulty task-difficulty--${priorityTaskClass}">${priorityTask}</p> 
-      ${notesReply}
+    <div class="col-8 col-xs-8 col-sm-8 col-md-8 col-lg-8">
+      <div id="rowTask-${data.id}">        
+        <p class="row-task__task-name" id="taskNameId-${data.id}">${data.text}</p>
+        <p class="task-difficulty task-difficulty--${priorityTaskClass}">${priorityTask}</p> 
+        <p class="row-task__note-task mb-0">${data.notes}</p>
+      </div>
+      <div id="checklist-${data.id}">
+      </div>
     </div>
 
     <div class="col-1 col-xs-1 col-sm-1 col-md-1 col-lg-1 text-center">
-      <i class='fa fa-plus action-buttons'></i>
-    </div>
+        <i id="addSubTaskId-${data.id}" class='fa fa-plus action-buttons addSubTaskId'></i>
+      </div>
     <div class="col-1 col-xs-1 col-sm-1 col-md-1 col-lg-1 text-center">
       <i class='fa fa-pencil-square-o action-buttons' onclick="editTask('${data.id}')"></i>
     </div>
@@ -133,7 +133,37 @@ function sucessAddTask(data){
     <div class="col-1 col-xs-1 col-sm-1 col-md-1 col-lg-1 text-center">
       <i class='fa fa-arrows-v action-buttons'></i>
     </div>
-  `; // todo : onclick -> debería estar en js como eventListener y no en html
+  `;
   containerTasks.insertBefore(newElement,containerTasks.firstChild);
 }
 
+// called by makeRequest when succesfully checked a task
+function successCheckTask(data) {
+  console.log(`HP : ${data.hp}, MP : ${data.mp}, XP : ${data.exp}, LVL : ${data.lvl}, GP : ${data.gp}`);
+  let result = document.getElementById('statsText');
+  result.innerHTML = `<i class="fa fa-heart footer__icon" aria-hidden="true"></i> : ${Math.round(data.hp)} &nbsp; <i class="fa fa-flask footer__icon" aria-hidden="true"></i> : ${Math.round(data.mp)} &nbsp; <i class="fa fa-database footer__icon" aria-hidden="true"></i> : ${Math.round(data.gp * 100) / 100}`;
+}
+
+function successAddSubTask(data){
+  console.log('una subtarea fue agregada correctamente');
+  console.log(data);
+
+  //borrar el form anterior (es el ultimo elemento del div)
+  $(`#checklist-${data.id}`).children().last().remove();
+
+  //sacar la info del nuevo checkbox a poner (id y texto) de la variable data que llega
+  let checklistSubTasks = data.checklist;
+  let textNewSubTask = checklistSubTasks[checklistSubTasks.length-1].text;
+  let idNewSubTask = checklistSubTasks[checklistSubTasks.length-1].id;
+
+  //poner el checkbox con la informacion nueva
+  $(`#checklist-${data.id}`).append(`
+    <div class="checkbox ml-2">
+      <input id="checkboxId-${idNewSubTask}" type="checkbox" class="subtask__checkbox-input"> 
+      <label for="checkboxId-${idNewSubTask}" class="subtask__checkbox-label">
+        <span class="subtask__checkbox-button"></span>
+        ${textNewSubTask}
+      </label>
+    </div>
+  `);
+}

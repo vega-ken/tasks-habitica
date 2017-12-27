@@ -84,6 +84,45 @@ router.post('/deleteTask', (req, res) => {
     });
 });
 
+// AGREGAR UNA SUBTAREA
+router.post('/addSubTask', (req, res) => {
+  let idTask = req.body.id;
+  let textSubTask = req.body.textSubTask;
+  let stringURL = `https://habitica.com/api/v3/tasks/${idTask}/checklist`;
+
+  requestify.request(stringURL, {
+    method: 'POST',
+    body: {
+  		text: textSubTask,
+  	},
+    headers: {
+      'x-api-user': keys.apiUser,
+      'x-api-key': keys.apiKey
+    }
+  })
+    .then((response) => {
+      res.json({ dataResponse: response }).end();
+    });
+});
+
+// CHEQUEAR UNA SUBTAREA
+router.post('/checkSubTask', (req, res) => {
+  let idTask = req.body.idTask;
+  let idSubTask = req.body.idSubTask;
+  let stringURL = `https://habitica.com/api/v3/tasks/${idTask}/checklist/${idSubTask}/score`;
+
+  requestify.request(stringURL, {
+    method: 'POST',
+    headers: {
+      'x-api-user': keys.apiUser,
+      'x-api-key': keys.apiKey
+    }
+  })
+    .then((response) => {
+      res.json({ dataResponse: response }).end();
+    });
+});
+
 //ACTUALIZAR UNA TAREA (solo titulo y notas)
 router.post('/updateTask', (req, res) => {
   let id = req.body.id;

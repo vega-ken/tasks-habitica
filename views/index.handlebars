@@ -23,18 +23,23 @@
   {{#each data}}
     <div class="row row-task pt-2 pb-2">
       <div class="col-8 col-xs-8 col-sm-8 col-md-8 col-lg-8">        
-        <p class="row-task__task-name" id="taskNameId-{{id}}">{{text}} </p>
-        <p class="task-difficulty task-difficulty--{{dificultadClass priority}}">{{dificultad priority}}</p> 
-        <p class="row-task__note-task mb-0">{{notes}}</p>
-        {{#each checklist}}
-        <div class="checkbox ml-2">
-          <input id="checkboxId-{{id}}" type="checkbox" class="subtask__checkbox-input" {{#if completed}}checked{{/if}}> 
-          <label for="checkboxId-{{id}}" class="subtask__checkbox-label">
-            <span class="subtask__checkbox-button"></span>
-            {{text}}
-          </label>
+        <div id="rowTask-{{id}}">
+          <p class="row-task__task-name" id="taskNameId-{{id}}">{{text}} </p>
+          <p class="task-difficulty task-difficulty--{{dificultadClass priority}}">{{dificultad priority}}</p> 
+          <p class="row-task__note-task mb-0">{{notes}}</p>
         </div>
-        {{/each}}
+        <div id="checklist-{{id}}">
+          {{#each checklist}}
+          <div class="checkbox ml-2">
+            <input id="checkboxId-{{id}}" type="checkbox" class="subtask__checkbox-input" {{#if completed}}checked{{/if}}> 
+            <label for="checkboxId-{{id}}" class="subtask__checkbox-label">
+              <span class="subtask__checkbox-button"></span>
+              {{text}}
+            </label>
+          </div>
+          {{/each}}
+        </div>
+        
       </div>
 
       <div class="col-1 col-xs-1 col-sm-1 col-md-1 col-lg-1 text-center">

@@ -187,22 +187,24 @@
 /* Nuevo form para sub tasks agregadas */
 
 .form-sub-task{
-  margin-top: .4rem;
-  margin-bottom: .4rem;
+  /*margin-top: .4rem;*/
+  margin-bottom: .5rem;
+  position: relative;
+  /*padding-left: 1.2rem;*/
 }
 
 .form-sub-task__input{
   border-radius: 2px;
   background-color: rgba(255, 255, 255, 0.534);
   border: none;
-  padding: .2rem .3rem;
+  /*padding: .2rem .3rem;*/
 
   font-family: inherit;
   color: inherit;
 
   display: block;
 
-  margin-left: 2rem;
+  margin-left: 1.4rem;
 
   border-bottom: 3px solid transparent;
 }
@@ -210,5 +212,5 @@
 .form-sub-task__input:focus{
   outline: none;
   box-shadow: 0 1rem 2rem rgba(0,0,0,0.1);
-  border-bottom: 3px solid greenyellow;
+  border-bottom: 3px solid #17a2b8;
 }
