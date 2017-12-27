@@ -23,8 +23,8 @@
   {{#each data}}
     <div class="row row-task pt-2 pb-2">
       <div class="col-8 col-xs-8 col-sm-8 col-md-8 col-lg-8">        
-        <p class="row-task__task-name mb-0" id="taskNameId-{{id}}">{{text}} </p>
-        <p class="task-difficulty task-difficulty--{{dificultadClass priority}} mb-2">{{dificultad priority}}</p> 
+        <p class="row-task__task-name" id="taskNameId-{{id}}">{{text}} </p>
+        <p class="task-difficulty task-difficulty--{{dificultadClass priority}}">{{dificultad priority}}</p> 
         <p class="row-task__note-task mb-0">{{notes}}</p>
         {{#each checklist}}
         <div class="checkbox ml-2">

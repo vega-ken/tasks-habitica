@@ -2,48 +2,44 @@ $("document").ready(() => {
 
   //usuario cambia dificultad de nuevas tareas
   let formDifs = document.querySelectorAll('#addTaskContainer span.task-difficulty');
-  for(let i = 0; i < formDifs.length; i++){
+  for (let i = 0; i < formDifs.length; i++) {
     formDifs[i].addEventListener('click', changeActiveDif);
   }
 
   //usuario agrega nueva tarea
   document.getElementById('formAddTask').addEventListener('submit', enterNewTask);
-    // antes :: $("#formAddTask").on('submit', (e) => { });
+  // antes :: $("#formAddTask").on('submit', (e) => { });
 
-  //check the task by doubleClicking
-
-  
-  //CHECK THE TASK
+  //usuario checkea una tarea haciendo doble click
   $("body").on('dblclick', `p.row-task__task-name`, (e) => {
-    let id = e.currentTarget.getAttribute('id');
-    let idNew = id.slice(11); // taskNameId-89093e59-12f2-4371-958e-37e5084acee4
     changeSync('waiting');
+    let id = e.currentTarget.getAttribute('id');
+    let idNew = id.slice(11); // ej: taskNameId-89093e59-12f2-4371-958e-37e5084acee4
     $("#" + id).parent().parent().remove(); // remover la fila entera de esa tarea
     let data = { id: idNew };
-    makeRequest('POST','checkTask',data, successCheckTask);
+    makeRequest('POST', 'checkTask', data, successCheckTask);
   });
 
-  // ---- ADDING EVENTS ---
+  // ---- ADDING EVENTS --- estos eventos son agregados a las tareas iniciales - como se agrega a las tareas agregadas dinamicamente (?)
 
   //DELETE EVENTS
   let deleteTasksButtons = document.querySelectorAll('.deleteTaskId');
-  for (let i = 0 ; i < deleteTasksButtons.length ; i++){
+  for (let i = 0; i < deleteTasksButtons.length; i++) {
     deleteTasksButtons[i].addEventListener('click', deleteTask);
   }
 
   //ADD SUB TASK EVENTS
-  let addSubTaskButtons = document.querySelectorAll('.addSubTaskId');
-  for (let i = 0 ; i < addSubTaskButtons.length ; i++){
-    addSubTaskButtons[i].addEventListener('click', addSubTask);
+  let addSubTasksButtons = document.querySelectorAll('.addSubTaskId');
+  for (let i = 0; i < addSubTasksButtons.length; i++) {
+    addSubTasksButtons[i].addEventListener('click', addSubTask);
   }
 
 });
 
-function enterNewTask(e){
+function enterNewTask(e) {
   e.preventDefault();
   changeSync('waiting');
   let textNewTask = document.getElementById('textNewTask');
-
   let result = separateTaskAndNotes(textNewTask.value);
 
   let data = {
@@ -59,43 +55,64 @@ function enterNewTask(e){
 
 
 
-function successCheckTask(data){
-  console.log(`HP : ${data.hp}, MP : ${data.hp}, XP : ${data.exp}, LVL : ${data.lvl}, GP : ${data.gp}`);
+function successCheckTask(data) {
+  console.log(`HP : ${data.hp}, MP : ${data.mp}, XP : ${data.exp}, LVL : ${data.lvl}, GP : ${data.gp}`);
   let result = document.getElementById('statsText');
   result.innerHTML = `<i class="fa fa-heart footer__icon" aria-hidden="true"></i> : ${Math.round(data.hp)} &nbsp; <i class="fa fa-flask footer__icon" aria-hidden="true"></i> : ${Math.round(data.mp)} &nbsp; <i class="fa fa-database footer__icon" aria-hidden="true"></i> : ${Math.round(data.gp * 100) / 100}`;
 }
 
 
-function addSubTask(e){
+function insertAfter(referenceNode , newNode) {
+  referenceNode.parentNode.insertBefore(newNode, referenceNode.nextSibling);
+}
+
+function addSubTask(e) {
   changeSync('waiting');
-  console.log(e.currentTarget);
-  //el padre, el padre : ese es el contendor de toda la fila tarea
-  // luego el primer hijo es donde se agrega el form. asi que es target
+  //console.log(e.currentTarget);
   let id = e.currentTarget.id; //addSubTaskId-89093e59-12f2-4371-958e-37e5084acee4
   let target = e.currentTarget.parentNode.parentNode.firstElementChild;
-  console.log(target);
 
-  // ya con el target, creas el elemento
+  let newForm = document.createElement('form');
+    newForm.className = "form-sub-task";
 
-  target.append(
-    `<form class='formnewsubtask'>
-      <input type='text' placeholder='Add new subtask' autocomplete='off'/>
-    </form>`); // onkeypress='return addTheSubTask(event,id,value)'
+  let newInputForm = document.createElement('input');
+    newInputForm.className = "form-sub-task__input";
+    newInputForm.setAttribute('type','text');
+    newInputForm.setAttribute('placeholder','Add new subtask');
+
+  
+  newForm.appendChild(newInputForm);
+
+  insertAfter(target.lastElementChild, newForm);
+
+  /*let newForm = $(`<form class="formnewsubtask">
+							<input type="text" placeholder="Add new subtask">
+						</form>`);*/
+
+  //target.append(newForm); // onkeypress='return addTheSubTask(event,id,value)'
 
 
 }
 
-function enterAddSubTask(id){
+function enterAddSubTask(id) {
 
+  /*`<div class="checkbox ml-2">
+    <input id="checkboxId-6751db7b-e470-40c3-8443-0c884ab17e62" type="checkbox" class="subtask__checkbox-input" checked=""> 
+    <label for="checkboxId-6751db7b-e470-40c3-8443-0c884ab17e62" class="subtask__checkbox-label">
+      <span class="subtask__checkbox-button"></span>
+      Subtarea 1 para ser realizada
+    </label>
+  </div>`*/
 }
 
 function deleteTask(e) {  // works.. with an error but works
   changeSync('waiting');
+  console.log(e.currentTarget);
   let id = e.currentTarget.id; //deleteTaskId-89093e59-12f2-4371-958e-37e5084acee4
   $("#" + id).parent().parent().remove();
   let idNew = id.slice(13);
   let data = { id: idNew };
-  makeRequest('POST','deleteTask',data);
+  makeRequest('POST', 'deleteTask', data);
 }
 
 /* ------- EDIT TASK _START --------- */

@@ -23,6 +23,13 @@ function changePriorityToNumber(priorityText){
   else return 0.1;
 }
 
+function classPriorityTask(priorityText){
+  if (priorityText == "Hard") return "hard";
+  else if (priorityText == "Medium") return "medium";
+  else if (priorityText == "Easy") return "easy";
+  else return "trivial";
+}
+
 function convertPriorityToText(priorityNumber) {
   if (priorityNumber == 2) return "Hard";
   else if (priorityNumber == 1.5) return "Medium";
@@ -96,6 +103,7 @@ function makeRequest(method, route, data, successFunction) {
 // called by makeRequest when succesfully added a new Task
 function sucessAddTask(data){ 
   let priorityTask = convertPriorityToText(data.priority);
+  let priorityTaskClass = classPriorityTask(priorityTask);
   let notesReply;
   if (data.notes) 
     notesReply = `<p class="row-task__note-task mb-0">${data.notes}</p>`;
@@ -108,7 +116,8 @@ function sucessAddTask(data){
   newElement.classList += 'row row-task pt-2 pb-2'; // agregar las clases al elemento nuevo
   newElement.innerHTML = `
     <div class="col-8 col-xs-8 col-sm-8 col-md-8 col-lg-8">        
-      <p class="row-task__task-name mb-0" id="${data.id}">${data.text} </p><p class="task-difficulty task${priorityTask} mb-2">${priorityTask}</p> 
+      <p class="row-task__task-name" id="taskNameId-${data.id}">${data.text}</p>
+      <p class="task-difficulty task-difficulty--${priorityTaskClass}">${priorityTask}</p> 
       ${notesReply}
     </div>
 
@@ -119,7 +128,7 @@ function sucessAddTask(data){
       <i class='fa fa-pencil-square-o action-buttons' onclick="editTask('${data.id}')"></i>
     </div>
     <div class="col-1 col-xs-1 col-sm-1 col-md-1 col-lg-1 text-center">
-      <i class='fa fa-trash action-buttons' onclick="deleteTask('${data.id}')"></i>
+      <i id="deleteTaskId-${data.id}" class='fa fa-trash action-buttons deleteTaskId'></i>
     </div>
     <div class="col-1 col-xs-1 col-sm-1 col-md-1 col-lg-1 text-center">
       <i class='fa fa-arrows-v action-buttons'></i>
