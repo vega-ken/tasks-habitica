@@ -91,7 +91,7 @@ function enterAddSubTask(e,id,value) {
   if (e.keyCode == 13) {
     changeSync('waiting');
     e.preventDefault();
-    console.log(e.currentTarget.id);
+    
     let id = e.currentTarget.id; //newSubTask-89093e59-12f2-4371-958e-37e5084acee4
     id = id.slice(11);
 

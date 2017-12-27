@@ -138,15 +138,12 @@ function sucessAddTask(data){
 
 // called by makeRequest when succesfully checked a task
 function successCheckTask(data) {
-  console.log(`HP : ${data.hp}, MP : ${data.mp}, XP : ${data.exp}, LVL : ${data.lvl}, GP : ${data.gp}`);
+  //console.log(`HP : ${data.hp}, MP : ${data.mp}, XP : ${data.exp}, LVL : ${data.lvl}, GP : ${data.gp}`);
   let result = document.getElementById('statsText');
   result.innerHTML = `<i class="fa fa-heart footer__icon" aria-hidden="true"></i> : ${Math.round(data.hp)} &nbsp; <i class="fa fa-flask footer__icon" aria-hidden="true"></i> : ${Math.round(data.mp)} &nbsp; <i class="fa fa-database footer__icon" aria-hidden="true"></i> : ${Math.round(data.gp * 100) / 100}`;
 }
 
 function successAddSubTask(data){
-  console.log('una subtarea fue agregada correctamente');
-  console.log(data);
-
   //borrar el form anterior (es el ultimo elemento del div)
   $(`#checklist-${data.id}`).children().last().remove();
 
